@@ -16,3 +16,22 @@
     - 它会统计接收到的值，并输出一个格式为 "当前计数值是 ..." 的字符串。
     
 - sink.c 文件定义了另一个自定义节点，它将操作符的输出字符串作为输入。它将每个接收到的输入打印到 stdout，并在输入流关闭时退出。
+
+## c-dataflow-test 编译、启动过程指令
+
+```
+cargo build -p dora-node-api-c --release
+
+clang node.c -lm -lrt -ldl -pthread -ldora_node_api_c -L ../../target/release --output build/c_node
+
+clang sink.c -lm -lrt -ldl -pthread -ldora_node_api_c -L ../../target/release --output build/c_sink
+
+cargo build -p dora-operator-api-c --release
+
+clang -c operator.c -o build/operator.o -fdeclspec -fPIC
+
+clang -shared build/operator.o -ldora_operator_api_c -L ../../target/release -o build/liboperator.so
+
+dara start dataflow.yml --name test // 运行使用
+
+```

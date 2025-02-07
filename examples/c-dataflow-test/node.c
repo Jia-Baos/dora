@@ -23,13 +23,14 @@ int main()
 
     printf("[c node] dora context initialized\n");
 
-    for (char i = 0; i < 100; i++)
+    int i = 0;
+    while(1)
     {
         void *event = dora_next_event(dora_context);
         if (event == NULL)
         {
             printf("[c node] ERROR: unexpected end of event\n");
-            return -1;
+            break;
         }
 
         enum DoraEventType ty = read_dora_event_type(event);
@@ -45,6 +46,7 @@ int main()
             char out_id[] = "message";
             char out_data[50];
             int out_data_len = sprintf(out_data, "loop iteration %d", i);
+            printf("[c node] loop iteration %d\n", i);
 
             dora_send_output(dora_context, out_id, strlen(out_id), out_data, out_data_len);
         }
@@ -58,9 +60,11 @@ int main()
         }
 
         free_dora_event(event);
+
+        ++i;
     }
 
-    printf("[c node] received 10 events\n");
+    printf("[c node] received 100 events\n");
 
     free_dora_context(dora_context);
 

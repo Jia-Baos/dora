@@ -165,5 +165,9 @@ path = "examples/c++-ros2-dataflow/run.rs"
 required-features = ["ros2-examples"]
 
 [[example]]
-name = "orbbec_camera"
-path = "examples/orbbec_camera/run.rs"
+name = "camera_orbbec"
+path = "examples/camera_orbbec/run.rs"
+
+[[example]]
+name = "camera_hikang"
+path = "examples/camera_hikang/run.rs"

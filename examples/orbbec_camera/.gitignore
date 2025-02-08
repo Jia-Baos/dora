@@ -1,1 +1,6 @@
 *.o
+
+# cmake artifact
+build
+lib
+bin

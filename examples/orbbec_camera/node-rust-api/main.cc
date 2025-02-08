@@ -1,4 +1,4 @@
-#include "../build/dora-node-api.h"
+#include "dora-node-api.h"
 
 #include <iostream>
 #include <vector>

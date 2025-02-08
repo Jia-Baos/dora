@@ -1,119 +1,30 @@
-# C++ 数据流示例
+# Dora CMake Dataflow Example
 
-## 简介
+This example shows how to create dora operators and custom nodes in CMake build system.
 
-This example shows how to create dora operators and custom nodes with C++.
+See also [c++-example](https://github.com/dora-rs/dora/blob/main/examples/c%2B%2B-dataflow/README.md) for the implementation details of operator and node.
 
-Dora does not provide a C++ API yet, but we can create adapters for either the C or Rust API. The `operator-rust-api` and `node-rust-api` folders implement an example operator and node based on dora's Rust API, using the `cxx` crate for bridging. The `operator-c-api` and `node-c-api` show how to create operators and nodes based on dora's C API. Both approaches work, so you can choose the API that fits your application better.
+## Compile and Run
 
-值得注意的是使用 `cxx` crate 作为桥接的 C++ 接口与原始的 C 接口是有较大差异的，使用时要格外注意
+To try it out, you can use the [`run.rs`](./run.rs) binary. It performs all required build steps and then starts the dataflow. Use the following command to run it: `cargo run --example cmake-dataflow`.
 
-## c++-dataflow-test 编译、启动过程指令
+## Out-of-tree compile
 
+This example also can be ran in a separate root directory.
 ```
-
+cd <path-to-cmake-dataflow>
 mkdir build
-
-
-// build dora-node-api-cxx
-cargo build -p dora-node-api-cxx --release
-
-cp ../../target/cxxbridge/dora-node-api-cxx/src/lib.rs.cc ./build/node-bridge.cc
-
-cp ../../target/cxxbridge/dora-node-api-cxx/src/lib.rs.h ./build/dora-node-api.h
-
-将 #include "../operator-rust-api/operator.h" 写入到 ./build/operator.h
-
-
-// build dora-operator-api-cxx
-cargo build -p dora-operator-api-cxx --release
-
-cp ../../target/cxxbridge/dora-operator-api-cxx/src/lib.rs.cc ./build/operator-bridge.cc
-
-cp ../../target/cxxbridge/dora-operator-api-cxx/src/lib.rs.h ./build/dora-operator-api.h
-
-
-// build dora-node-api-c
-cargo build -p dora-node-api-c --release
-
-
-// build dora-operator-api-c
-cargo build -p dora-operator-api-c --release
-
-
-// build cxx node
-clang++ ./node-rust-api/main.cc ./build/node-bridge.cc -std=c++17 -lm -lrt -ldl -pthread -ldora_node_api_cxx
- -L ../../target/release --output build/node_rust_api
-
-clang++ ./node-c-api/main.cc -std=c++17 -lm -lrt -ldl -pthread -ldora_node_api_c -L ../../target/release --o
-utput build/node_c_api
-
-
-// build cxx operator
-clang++ -c operator-rust-api/operator.cc -std=c++17 -o ./operator-rust-api/operator.o -fPIC
-
-clang++ -c ./build/operator-bridge.cc -std=c++17 -o ./build/operator-bridge.o -fPIC
-
-clang++ -shared operator-rust-api/operator.o build/operator-bridge.o -ldora_operator_api_cxx -L ../../target
-/release -o build/liboperator_rust_api.so
-
-clang++ -c operator-c-api/operator.cc -std=c++17 -o operator-c-api/operator.o -fPIC
-
-clang++ -shared operator-c-api/operator.o -ldora_operator_api_c -L ../../target/release -o build/liboperator
-_c_api.so
-
-
-dora start dataflow.yml --name test // 运行使用
-
+cd build && cmake ..
+make install
+cd ..
+dora up
+dora start dataflow.yml
 ```
 
-include path: /usr/include/opencv4
+为用户添加打开 usb 设备的权限，设置后需要重启电脑
 
-opencv_calib3d;
-opencv_core;
-opencv_dnn;
-opencv_features2d;
-opencv_flann;
-opencv_highgui;
-opencv_imgcodecs;
-opencv_imgproc;
-opencv_ml;
-opencv_objdetect;
-opencv_photo;
-opencv_stitching;
-opencv_video;
-opencv_videoio;
-opencv_aruco;
-opencv_bgsegm;
-opencv_bioinspired;
-opencv_ccalib;
-opencv_datasets;
-opencv_dnn_objdetect;
-opencv_dnn_superres;
-opencv_dpm;
-opencv_face;
-opencv_freetype;
-opencv_fuzzy;
-opencv_hdf;
-opencv_hfs;
-opencv_img_hash;
-opencv_line_descriptor;
-opencv_optflow;
-opencv_phase_unwrapping;
-opencv_plot;
-opencv_quality;
-opencv_reg;
-opencv_rgbd;
-opencv_saliency;
-opencv_shape;
-opencv_stereo;
-opencv_structured_light;
-opencv_superres;
-opencv_surface_matching;
-opencv_text;
-opencv_tracking;
-opencv_videostab;
-opencv_viz;
-opencv_ximgproc;
-opencv_xobjdetect;
-opencv_xphoto
+```
+sudo usermod -a -G dialout username
+```
+
+我们已经使得代码顺利编译通过，但是通过 dora 启动的过程中，程序似乎无法正确打开 usb 设备，这这有待进一步探索

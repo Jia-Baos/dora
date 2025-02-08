@@ -24,7 +24,7 @@ async fn main() -> eyre::Result<()> {
     tokio::fs::create_dir_all("build").await?;
     let build_dir = Path::new("build");
 
-    build_package("dora-node-api-cxx").await?;
+    build_package("dora-node-api-cxx").await?;  // for rust api
     let node_cxxbridge = target
         .join("cxxbridge")
         .join("dora-node-api-cxx")
@@ -45,7 +45,7 @@ async fn main() -> eyre::Result<()> {
     )
     .await?;
 
-    build_package("dora-operator-api-cxx").await?;
+    build_package("dora-operator-api-cxx").await?;  // for rust api
     let operator_cxxbridge = target
         .join("cxxbridge")
         .join("dora-operator-api-cxx")
@@ -61,8 +61,8 @@ async fn main() -> eyre::Result<()> {
     )
     .await?;
 
-    build_package("dora-node-api-c").await?;
-    build_package("dora-operator-api-c").await?;
+    build_package("dora-node-api-c").await?;    // for c api
+    build_package("dora-operator-api-c").await?;    // for c api
     build_cxx_node(
         root,
         &[
@@ -72,7 +72,7 @@ async fn main() -> eyre::Result<()> {
         "node_rust_api",
         &["-l", "dora_node_api_cxx"],
     )
-    .await?;
+    .await?;    // for rust api
     build_cxx_node(
         root,
         &[&dunce::canonicalize(
@@ -81,7 +81,7 @@ async fn main() -> eyre::Result<()> {
         "node_c_api",
         &["-l", "dora_node_api_c"],
     )
-    .await?;
+    .await?;    // for c api
     build_cxx_operator(
         &[
             &dunce::canonicalize(Path::new("operator-rust-api").join("operator.cc"))?,
@@ -95,7 +95,7 @@ async fn main() -> eyre::Result<()> {
             root.join("target").join("debug").to_str().unwrap(),
         ],
     )
-    .await?;
+    .await?;    // for rust api
     build_cxx_operator(
         &[&dunce::canonicalize(
             Path::new("operator-c-api").join("operator.cc"),
@@ -108,7 +108,7 @@ async fn main() -> eyre::Result<()> {
             root.join("target").join("debug").to_str().unwrap(),
         ],
     )
-    .await?;
+    .await?;    // for c api
 
     let dataflow = Path::new("dataflow.yml").to_owned();
     build_package("dora-runtime").await?;

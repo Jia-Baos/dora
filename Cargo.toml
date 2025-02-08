@@ -163,3 +163,7 @@ path = "examples/cmake-dataflow/run.rs"
 name = "cxx-ros2-dataflow"
 path = "examples/c++-ros2-dataflow/run.rs"
 required-features = ["ros2-examples"]
+
+[[example]]
+name = "orbbec_camera"
+path = "examples/orbbec_camera/run.rs"

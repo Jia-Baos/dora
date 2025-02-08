@@ -1,22 +1,28 @@
 cmake_minimum_required(VERSION 3.21)
+
+# 手动设置编译器
+set(CMAKE_C_COMPILER "/usr/bin/clang")
+set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+
 project(cmake-dataflow LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "-fPIC")
+set(CMAKE_CXX_FLAGS "-fPIC")    # 用于生成可以在内存中任意位置加载并执行的代码
 
 include(DoraTargets.cmake)
 
+# 指定动态库链接路径
 link_directories(${dora_link_dirs})
 
 add_executable(node_c_api node-c-api/main.cc)
 add_dependencies(node_c_api Dora_c)
 target_include_directories(node_c_api PRIVATE ${dora_c_include_dir})
-target_link_libraries(node_c_api dora_node_api_c)
+target_link_libraries(node_c_api m rt dl pthread dora_node_api_c)
 
 add_executable(node_rust_api node-rust-api/main.cc ${node_bridge})
 add_dependencies(node_rust_api Dora_cxx)
 target_include_directories(node_rust_api PRIVATE ${dora_cxx_include_dir})
-target_link_libraries(node_rust_api dora_node_api_cxx)
+target_link_libraries(node_rust_api m rt dl pthread dora_node_api_cxx)
 
 add_library(operator_c_api SHARED operator-c-api/operator.cc)
 add_dependencies(operator_c_api Dora_c)

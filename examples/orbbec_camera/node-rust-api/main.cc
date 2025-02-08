@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include "orbbec.h"
 
 int main()
 {
@@ -10,7 +11,15 @@ int main()
 
     auto dora_node = init_dora_node();
 
-    while(true)
+    OrbbecCam cam;
+    cam.wait4Device();
+    cam.init();
+
+    std::thread cam_thread = std::thread([&cam]()
+                                         { cam.run(); });
+    cam_thread.detach();
+
+    while (true)
     {
 
         auto event = dora_node.events->next();
@@ -37,6 +46,9 @@ int main()
             //     std::cerr << "Error: " << error << std::endl;
             //     return -1;
             // }
+
+            cam.saveImg();
+            cam.saveDepth();
         }
         else
         {

@@ -38,9 +38,9 @@ async fn main() -> eyre::Result<()> {
         bail!("failed to build a cmake-generated project binary tree");
     }
 
-    let dataflow = Path::new("dataflow.yml").to_owned();
-    build_package("dora-runtime").await?;
-    run_dataflow(&dataflow).await?;
+    // let dataflow = Path::new("dataflow.yml").to_owned();
+    // build_package("dora-runtime").await?;
+    // run_dataflow(&dataflow).await?;
 
     Ok(())
 }

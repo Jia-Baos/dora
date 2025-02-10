@@ -2,4 +2,8 @@ nodes:
   - id: cxx-node-rust-api
     path: build/node_rust_api
     inputs:
-      tick: dora/timer/millis/50   
+      tick: dora/timer/millis/50
+    args:
+      ssss
+      aaaa
+      vvvv

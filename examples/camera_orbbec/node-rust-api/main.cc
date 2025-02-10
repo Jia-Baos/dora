@@ -4,8 +4,14 @@
 #include <vector>
 #include "orbbec.h"
 
-int main()
+int main(int argc, char *argv[])
 {
+    // 遍历所有命令行参数
+    for (int i = 1; i < argc; ++i)
+    {
+        std::cout << "Argument " << i << ": " << argv[i] << std::endl;
+    }
+
     std::cout << "HELLO FROM C++" << std::endl;
     unsigned char counter = 0;
 

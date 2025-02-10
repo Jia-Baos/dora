@@ -21,13 +21,7 @@ dora up
 dora start dataflow.yml
 ```
 
-为用户添加打开 usb 设备的权限，设置后需要重启电脑
-
-```
-sudo usermod -a -G dialout username
-```
-
-我们已经使得代码顺利编译通过，但是通过 dora 启动的过程中，程序似乎无法正确打开 usb 设备，这这有待进一步探索
+## CMake文件备份
 
 ```
 cmake_minimum_required(VERSION 3.21)
@@ -47,15 +41,15 @@ set(CMAKE_CXX_FLAGS "-fPIC")    # 用于生成可以在内存中任意位置加�
 include(DoraTargets.cmake)
 
 # obsensor sdk
-set(OrbbecSDK_ROOT_DIR ${CMAKE_SOURCE_DIR}/SDK1.10.18)
-set(OrbbecSDK_INCLUDE_DIR ${OrbbecSDK_ROOT_DIR}/include)
-set(OrbbecSDK_LIBRARY_DIRS ${OrbbecSDK_ROOT_DIR}/lib/x86_64)
+set(HiKangSDK_ROOT_DIR ${CMAKE_SOURCE_DIR}/SDK)
+set(HiKangSDK_INCLUDE_DIR ${HiKangSDK_ROOT_DIR}/include)
+set(HiKangSDK_LIBRARY_DIRS ${HiKangSDK_ROOT_DIR}/lib/x86_64)
 
 message(STATUS "Jia-Baos added, CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
 message(STATUS "Jia-Baos added, CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
 
-file(GLOB ORBBEC_LIBS "${OrbbecSDK_LIBRARY_DIRS}/lib*.so")
-message(STATUS "library: ${ORBBEC_LIBS}")
+file(GLOB HiKang_LIBS "${HiKangSDK_LIBRARY_DIRS}/lib*.so")
+message(STATUS "library: ${HiKang_LIBS}")
 
 
 find_package(OpenCV REQUIRED)
@@ -70,17 +64,21 @@ else()
 endif()
 
 # 指定头文件链接路径
-include_directories(${OrbbecSDK_INCLUDE_DIR} ${OpenCV_INCLUDE_DIRS})
+include_directories(${HiKangSDK_INCLUDE_DIR} ${OpenCV_INCLUDE_DIRS})
 
 # 指定动态库链接路径
-link_directories(${OrbbecSDK_LIBRARY_DIRS} ${dora_link_dirs})
+link_directories(${HiKangSDK_LIBRARY_DIRS} ${dora_link_dirs})
 
 file(GLOB FILES_SRC "./node-rust-api/*.cc")
 file(GLOB FILES_HEADERS "./node-rust-api/*.h")
 add_executable(node_rust_api ${FILES_SRC} ${FILES_HEADERS} ${node_bridge})
 add_dependencies(node_rust_api Dora_cxx)
 target_include_directories(node_rust_api PRIVATE ${dora_cxx_include_dir})
-target_link_libraries(node_rust_api PUBLIC m rt dl pthread dora_node_api_cxx ${ORBBEC_LIBS} ${OpenCV_LIBS})
+target_link_libraries(node_rust_api PRIVATE m rt dl pthread dora_node_api_cxx ${OpenCV_LIBS} MvCameraControl)
 
 install(TARGETS node_rust_api DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 ```
+
+## 更新说明
+
+2025-02-10 09：37 The Hikvision capture images plugin is now working properly.

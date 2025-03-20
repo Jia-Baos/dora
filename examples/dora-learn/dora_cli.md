@@ -1,4 +1,6 @@
 
+## Dora-cli
+
 ```
 Commands:
   check        Check if the coordinator and the daemon is running

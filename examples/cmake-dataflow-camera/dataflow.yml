@@ -1,0 +1,19 @@
+nodes:
+    - id: node-cpp-api
+      path: install/bin/node_cpp_api
+      inputs:
+          tick: dora/timer/millis/300
+      outputs:
+          - image
+
+    # - id: node-plot
+    #   path: install/bin/node_plot
+    #   inputs:
+    #       image: node-cpp-api/image
+
+    - id: runtime-node-1
+      operators:
+          - id: operator-plot
+            shared-library: install/lib/operator_plot
+            inputs:
+                image: node-cpp-api/image

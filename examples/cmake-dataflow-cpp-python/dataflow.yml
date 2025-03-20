@@ -1,0 +1,50 @@
+nodes:
+    - id: node-cpp-api
+      path: bin/node_cpp_api
+      inputs:
+          tick: dora/timer/millis/300
+      outputs:
+          - counter
+
+    - id: runtime-node-1
+      custom:
+          source: node-python-api/main.py
+          inputs:
+              counter_1: node-cpp-api/counter
+          outputs:
+              - status
+
+    - id: runtime-node-2
+      operator:
+          python: operator-python-api/main.py
+          inputs:
+              counter_1: node-cpp-api/counter
+          outputs:
+              - status
+
+    #  case 0, OK
+    # - id: runtime-node-1
+    #     path: node-python-api/main.py
+    #     inputs:
+    #         counter_1: node-cpp-api/counter
+    #     outputs:
+    #     - status
+    #
+
+    # case 1, OK
+    # - id: runtime-node-1
+    #   custom:
+    #       source: node-python-api/main.py
+    #       inputs:
+    #           counter_1: node-cpp-api/counter
+    #       outputs:
+    #           - status
+
+    # case 2, BAD, WARN dora_runtime: received input op/counter_1 for unknown operator[Python node]
+    # - id: runtime-node-1
+    #   operator:
+    #       python: node-python-api/main.py
+    #       inputs:
+    #           counter_1: node-cpp-api/counter
+    #       outputs:
+    #           - status

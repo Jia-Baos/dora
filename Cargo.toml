@@ -23,6 +23,7 @@ members = [
     "examples/multiple-daemons/node",
     "examples/multiple-daemons/operator",
     "examples/multiple-daemons/sink",
+    "examples/cmake-dataflow-cpp-rust/node-rust-api",
     "libraries/arrow-convert",
     "libraries/communication-layer/*",
     "libraries/core",
@@ -173,3 +174,15 @@ path = "examples/cmake-dataflow/run.rs"
 name = "cxx-ros2-dataflow"
 path = "examples/c++-ros2-dataflow/run.rs"
 required-features = ["ros2-examples"]
+
+[[example]]
+name = "cmake-dataflow-camera"
+path = "examples/cmake-dataflow-camera/run.rs"
+
+[[example]]
+name = "cmake-dataflow-cpp-python"
+path = "examples/cmake-dataflow-cpp-python/run.rs"
+
+[[example]]
+name = "cmake-dataflow-cpp-rust"
+path = "examples/cmake-dataflow-cpp-rust/run.rs"

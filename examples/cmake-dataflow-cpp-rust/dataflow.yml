@@ -1,0 +1,34 @@
+nodes:
+    - id: node-cpp-api
+      path: bin/node_cpp_api
+      inputs:
+          tick: dora/timer/millis/300
+      outputs:
+          - counter
+
+    - id: runtime-node-1
+      path: ../../target/debug/node-rust-api
+      inputs:
+          tick: dora/timer/millis/100
+          random: node-cpp-api/counter
+      outputs:
+          - status
+
+    # case 0, OK
+    # - id: runtime-node-1
+    #   custom:
+    #       source: ../../target/debug/node-rust-api
+    #       inputs:
+    #           tick: dora/timer/millis/100
+    #           random: node-cpp-api/counter
+    #       outputs:
+    #           - status
+
+    # case 1, OK
+    # - id: runtime-node-1
+    #   path: ../../target/debug/node-rust-api
+    #   inputs:
+    #       tick: dora/timer/millis/100
+    #       random: node-cpp-api/counter
+    #   outputs:
+    #       - status

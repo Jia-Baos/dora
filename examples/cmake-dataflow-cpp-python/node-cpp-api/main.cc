@@ -10,7 +10,7 @@ int main()
 
     auto dora_node = init_dora_node();
 
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 200; i++)
     {
 
         auto event = next_event(dora_node.events);

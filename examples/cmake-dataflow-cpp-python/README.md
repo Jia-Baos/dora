@@ -10,7 +10,7 @@ To try it out, you can use the [`run.rs`](./run.rs) binary. It performs all requ
 
 ## Out-of-tree compile
 
-This example also can be ran in a separate root directory.
+This example also can be run in a separate root directory.
 ```
 cd <path-to-cmake-dataflow-cpp-python>
 mkdir build
@@ -24,7 +24,7 @@ dora start dataflow.yml
 ## run the dataflow using uv
 
 ```
-# build the cxx-node
+# build the node-cpp-api
 cargo run --example cmake-dataflow-cpp-python
 
 uv venv --seed -p 3.11

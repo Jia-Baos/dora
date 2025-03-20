@@ -10,7 +10,7 @@ To try it out, you can use the [`run.rs`](./run.rs) binary. It performs all requ
 
 ## Out-of-tree compile
 
-This example also can be ran in a separate root directory.
+This example also can be run in a separate root directory.
 ```
 cd <path-to-cmake-dataflow-cpp-rust>
 mkdir build
@@ -29,7 +29,7 @@ cargo run --example cmake-dataflow-cpp-rust
 
 # build node-rust-api
 # add '"examples/cmake-dataflow-cpp-rust/node-rust-api",' in Cargo.toml
-cargo build -p node_cpp_api
+cargo build -p node-rust-api
 
 uv venv --seed -p 3.11
 

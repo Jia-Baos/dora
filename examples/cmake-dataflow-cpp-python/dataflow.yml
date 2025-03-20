@@ -40,7 +40,7 @@ nodes:
     #       outputs:
     #           - status
 
-    # case 2, BAD, WARN dora_runtime: received input op/counter_1 for unknown operator[Python node]
+    # case 2, OK maybe the node is start too late
     # - id: runtime-node-1
     #   operator:
     #       python: node-python-api/main.py

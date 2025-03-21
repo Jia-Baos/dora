@@ -9,6 +9,9 @@
 
 Each node defines its inputs and outputs to connect with other nodes.
 
+## Interface about C and C++
+
+Dora does not provide a C++ API yet, but we can create adapters for either the C or Rust API. The `operator-rust-api` and `node-rust-api` folders implement an example operator and node based on dora's Rust API, using the `cxx` crate for bridging. The `operator-c-api` and `node-c-api` show how to create operators and nodes based on dora's C API. Both approaches work, so you can choose the API that fits your application better.
 
 ## dataflow.yml 中字段解析
 
@@ -40,7 +43,9 @@ bbox_format = os.getenv("FORMAT", "xyxy")
 cargo build -p dora-node-api-c
 ```
 
-## 启动
+## 启动 example
+
+通过下面的命令可以执行 编译、启动 过程
 
 ```
 dora start --example cxx-dataflow

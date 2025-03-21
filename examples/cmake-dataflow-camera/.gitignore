@@ -1,0 +1,10 @@
+*.o
+
+# log
+out
+Log
+
+# cmake artifact
+build
+lib
+bin

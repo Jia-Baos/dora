@@ -11,9 +11,10 @@ nodes:
       inputs:
           image: node-cpp-api/image
 
-    # - id: runtime-node-1
-    #   operators:
-    #       - id: operator-plot
-    #         shared-library: install/lib/operator_plot
-    #         inputs:
-    #             image: node-cpp-api/image
+    - id: runtime-node-1
+      path: ../../target/debug/dora-rerun-node
+      inputs:
+          image: node-cpp-api/image
+      env:
+          RERUN_FLUSH_TICK_SECS: 0.001
+          RERUN_MEMORY_LIMIT: 25%

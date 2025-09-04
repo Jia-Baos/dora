@@ -38,12 +38,3 @@ dora build dataflow.yml --uv
 
 dora run dataflow.yml --uv
 ```
-
-## Easy to use
-
-```
-# build node-cpp-api, operator-cpp-api
-cargo run --example cmake-dataflow-camera
-
-sudo ./run.sh
-```

@@ -26,7 +26,7 @@ if(DORA_ROOT_DIR)
             --package dora-operator-api-cxx
         INSTALL_COMMAND ""
     )
-    
+
     add_custom_command(OUTPUT ${node_bridge} ${dora_cxx_include_dir} ${operator_bridge} ${dora_c_include_dir}
         WORKING_DIRECTORY ${DORA_ROOT_DIR}
         DEPENDS Dora
@@ -48,7 +48,7 @@ if(DORA_ROOT_DIR)
             cp apis/c/operator ${CMAKE_CURRENT_BINARY_DIR}/include/c -r
 
     )
-    
+
     add_custom_target(Dora_c DEPENDS ${dora_c_include_dir})
     add_custom_target(Dora_cxx DEPENDS ${node_bridge} ${operator_bridge} ${dora_cxx_include_dir})
     set(dora_link_dirs ${DORA_ROOT_DIR}/target/debug)
@@ -101,9 +101,7 @@ else()
     )
 
     set(dora_link_dirs ${CMAKE_CURRENT_BINARY_DIR}/dora/src/Dora/target/debug)
-    
+
     add_custom_target(Dora_c DEPENDS ${dora_c_include_dir})
     add_custom_target(Dora_cxx DEPENDS ${node_bridge} ${operator_bridge} ${dora_cxx_include_dir})
 endif()
-
-

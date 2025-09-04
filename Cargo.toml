@@ -24,6 +24,7 @@ members = [
     "examples/multiple-daemons/operator",
     "examples/multiple-daemons/sink",
     "examples/cmake-dataflow-cpp-rust/node-rust-api",
+    "examples/cmake-dataflow-rerun/dora-rerun-node",
     "libraries/arrow-convert",
     "libraries/communication-layer/*",
     "libraries/core",
@@ -186,3 +187,7 @@ path = "examples/cmake-dataflow-cpp-python/run.rs"
 [[example]]
 name = "cmake-dataflow-cpp-rust"
 path = "examples/cmake-dataflow-cpp-rust/run.rs"
+
+[[example]]
+name = "cmake-dataflow-rerun"
+path = "examples/cmake-dataflow-rerun/run.rs"

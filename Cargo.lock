@@ -3006,6 +3006,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "dora-rerun-node"
+version = "0.3.10"
+dependencies = [
+ "bytemuck",
+ "dora-node-api",
+ "eyre",
+ "k",
+ "ndarray 0.15.6",
+ "pyo3",
+ "rerun",
+ "tokio",
+]
+
+[[package]]
 name = "dora-ros2-bridge"
 version = "0.3.10"
 dependencies = [
